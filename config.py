@@ -28,7 +28,7 @@ RUNPOD_API_KEY = os.environ.get("runpod_api_key", "YOUR_RUNPOD_API_KEY_HERE")
 
 # Your serverless endpoint ID (created after deploying the Docker image)
 # Found at: https://www.runpod.io/console/serverless → your endpoint
-ENDPOINT_ID = "YOUR_ENDPOINT_ID_HERE"
+ENDPOINT_ID = os.environ.get("runpod_endpoint_id", "2sau5ql8vyhxvi")
 
 # ============================================================
 # Output Settings
