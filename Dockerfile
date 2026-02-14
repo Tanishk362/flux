@@ -1,5 +1,5 @@
 # ============================================================
-# FLUX.2 [dev] FP8 — RunPod Serverless Worker
+# FLUX.2 [dev] — RunPod Serverless Worker
 # ============================================================
 # Base image: RunPod PyTorch with CUDA support
 FROM runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04
@@ -11,7 +11,7 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV HF_HOME=/app/models
 ENV TRANSFORMERS_CACHE=/app/models
-ENV MODEL_ID=black-forest-labs/FLUX.2-dev
+ENV MODEL_ID=diffusers/FLUX.2-dev-bnb-4bit
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -26,22 +26,22 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 # Pre-download model weights during build
 # This bakes the model into the Docker image for instant cold starts
-# NOTE: You need to set HF_TOKEN as a build arg if the model is gated
 ARG HF_TOKEN=""
 RUN if [ -n "$HF_TOKEN" ]; then \
-        huggingface-cli login --token $HF_TOKEN; \
+    huggingface-cli login --token $HF_TOKEN; \
     fi
 
-# Download model weights
+# Download the quantized FLUX.2-dev model weights (4-bit, ~10GB)
 RUN python -c "\
-from diffusers import FluxPipeline; \
-import torch; \
-pipe = FluxPipeline.from_pretrained( \
-    'black-forest-labs/FLUX.2-dev', \
-    torch_dtype=torch.float16, \
-    use_safetensors=True \
-); \
-print('Model downloaded successfully')" || echo "WARNING: Model download failed. Model will be downloaded at runtime."
+    from huggingface_hub import snapshot_download; \
+    snapshot_download('diffusers/FLUX.2-dev-bnb-4bit'); \
+    print('FLUX.2-dev-bnb-4bit model downloaded successfully')"
+
+# Also download the base model config for Flux2Pipeline compatibility
+RUN python -c "\
+    from huggingface_hub import snapshot_download; \
+    snapshot_download('black-forest-labs/FLUX.2-dev', allow_patterns=['*.json', '*.txt', 'tokenizer*']); \
+    print('FLUX.2-dev config files downloaded successfully')"
 
 # Copy handler script
 COPY handler.py /app/handler.py
