@@ -7,9 +7,8 @@ WORKDIR /app
 
 # Environment variables
 ENV PYTHONUNBUFFERED=1
-# Use network volume for persistent model cache (survives cold starts)
-ENV HF_HOME=/runpod-volume/models
-ENV TRANSFORMERS_CACHE=/runpod-volume/models
+ENV HF_HOME=/app/models
+ENV TRANSFORMERS_CACHE=/app/models
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
