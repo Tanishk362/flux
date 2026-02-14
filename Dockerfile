@@ -27,8 +27,9 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Pre-download model weights during build
 # This bakes the model into the Docker image for instant cold starts
 ARG HF_TOKEN=""
+ENV HF_TOKEN_BUILD=$HF_TOKEN
 RUN if [ -n "$HF_TOKEN" ]; then \
-    huggingface-cli login --token $HF_TOKEN; \
+    python -c "from huggingface_hub import login; login(token='$HF_TOKEN')"; \
     fi
 
 # Download the quantized FLUX.2-dev model weights (4-bit, ~10GB)
