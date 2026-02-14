@@ -1,0 +1,37 @@
+[
+    {
+        "prompt": "A majestic golden retriever sitting in a field of lavender flowers at sunset, cinematic lighting, photorealistic, 8K",
+        "width": 1024,
+        "height": 1024,
+        "num_steps": 20,
+        "guidance_scale": 3.5
+    },
+    {
+        "prompt": "A futuristic cyberpunk city skyline at night with neon lights reflecting on wet streets, ultra detailed, photorealistic",
+        "width": 1024,
+        "height": 1024,
+        "num_steps": 20,
+        "guidance_scale": 3.5
+    },
+    {
+        "prompt": "A cozy coffee shop interior with warm lighting, wooden furniture, steaming cup of latte art, bokeh background, photorealistic",
+        "width": 1024,
+        "height": 1024,
+        "num_steps": 20,
+        "guidance_scale": 3.5
+    },
+    {
+        "prompt": "An astronaut floating in space with Earth in the background, helmet reflecting stars, cinematic composition, hyper-realistic",
+        "width": 1024,
+        "height": 1024,
+        "num_steps": 20,
+        "guidance_scale": 3.5
+    },
+    {
+        "prompt": "A beautiful Japanese garden with cherry blossoms, koi pond, wooden bridge, morning mist, soft natural lighting, photorealistic",
+        "width": 1024,
+        "height": 1024,
+        "num_steps": 20,
+        "guidance_scale": 3.5
+    }
+]

@@ -1,0 +1,5 @@
+# Ignore sensitive files
+.env
+output/
+__pycache__/
+*.pyc
